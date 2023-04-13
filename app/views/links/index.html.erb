@@ -1,0 +1,8 @@
+<div>
+  <h1 class="font-bold text-2xl">Enter the URL you want to shortened : </h1>
+</div>
+<%= form_with(model: @link, url: create_links_path) do |f|%>
+ <%= f.label :given_url%>
+ <%= f.text_field :given_url%>
+  <%= f.submit "Short url",class:"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"%>
+<%end%>
