@@ -3,37 +3,27 @@ class LinksController < ApplicationController
     @link = Link.new
   end
 
-    def show
-      @link = Link.find(params[:id])
-      if params[:commit] == "Short url"
-        @link.short_url = SecureRandom.hex(3)
-        if @link.save
-          redirect_to root_url, notice: "Short URL created successfully."
-        else
-          render :show
-        end
-      end
-    end
-  
-
-  def new
-    @link = Link.new
-  end
-
   def create
-    byebug
-    @link = Link.new(given_url: params[:given_url])
+    @link = Link.find_by(given_url: link_params[:given_url])
+    unless @link
+      @link = Link.new(link_params)
+      @link.short_url = SecureRandom.hex(3)
+    end
+
     if @link.save
-      redirect_to root_path, notice: "Link created successfully."
+      redirect_to link_path(@link), notice: "Link created successfully."
     else
       render :index
     end
   end
 
-  private
-  def link_params
-    params.require(:links).permit(:given_url)
+  def show
+    @link = Link.find(params[:id])
   end
 
-  
+  private
+
+  def link_params
+    params.require(:link).permit(:given_url)
+  end
 end

@@ -1,4 +1,5 @@
+# app/models/link.rb
+
 class Link < ApplicationRecord
-    validates :short_url, uniqueness: true
 end
   
